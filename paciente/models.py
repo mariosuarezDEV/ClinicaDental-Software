@@ -1,5 +1,6 @@
 from django.db import models
 from base.models import BaseModel
+from django_prose_editor.fields import ProseEditorField
 # Create your models here.
 class PacienteModel(BaseModel):
     nombre = models.CharField(max_length=100, null=False, blank=False, verbose_name="Nombre", help_text="Nombre del paciente", error_messages={"required": "Este campo es obligatorio"})
@@ -35,3 +36,22 @@ class PacienteModel(BaseModel):
     
     def __str__(self):
         return f"{self.nombre_completo}"
+
+class HistorialMedicoPaciente(BaseModel):
+    """Historial médico del paciente"""
+    paciente = models.OneToOneField(PacienteModel, on_delete=models.CASCADE, related_name='historial_medico', verbose_name="Paciente")
+    allergies = ProseEditorField("Alergias", blank=True, help_text="Alergias del paciente")
+    medical_conditions = ProseEditorField("Condiciones Médicas", blank=True, help_text="Condiciones médicas del paciente")
+    current_medications = ProseEditorField("Medicamentos Actuales", blank=True, help_text="Medicamentos actuales del paciente")
+    past_medications = ProseEditorField("Medicamentos Pasados", blank=True, help_text="Medicamentos pasados del paciente")
+    blood_type = models.CharField("Tipo de Sangre", max_length=5, blank=True, help_text="Tipo de sangre del paciente")
+    last_update = models.DateField("Última Actualización", auto_now=True, help_text="Última actualización del historial médico")
+    additional_notes = ProseEditorField("Notas Adicionales", blank=True, help_text="Notas adicionales sobre el paciente")
+    
+    class Meta:
+        verbose_name = "Historial Médico"
+        verbose_name_plural = "Historiales Médicos"
+        db_table = "historiales_medicos"
+    
+    def __str__(self):
+        return f"Historial de {self.paciente.nombre_completo}"

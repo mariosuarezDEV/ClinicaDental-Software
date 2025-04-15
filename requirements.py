@@ -5,5 +5,8 @@ django-allauth==65.7.0
 django-bootstrap5==25.1
 django-crispy-forms==2.3
 django-formtools==2.5.1
+django-js-asset==3.1.2
+django-prose-editor==0.10.4
+django-unfold==0.55.1
 sqlparse==0.5.3
 tzdata==2025.2
