@@ -2,6 +2,7 @@ from django.db import models
 from base.models import BaseModel
 from django.contrib.auth.models import User
 from django_prose_editor.fields import ProseEditorField
+from citas.models import Appointment
 
 class TreatmentCategory(BaseModel):
     """Categorías de tratamientos dentales"""
@@ -12,15 +13,16 @@ class TreatmentCategory(BaseModel):
     class Meta:
         verbose_name = "Categoría de Tratamiento"
         verbose_name_plural = "Categorías de Tratamientos"
+        db_table = 'tratamiento_categoria'
     
     def __str__(self):
-        return self.nombre
+        return self.name
 
 
 class Treatment(BaseModel):
     """Catálogo de tratamientos disponibles"""
-    nombre = models.CharField("Nombre", max_length=200)
-    description = models.TextField("Descripción" , blank=True, null=True)
+    name = models.CharField("Nombre", max_length=200)
+    description = ProseEditorField("Descripción" , blank=True, null=True)
     category = models.ForeignKey(TreatmentCategory, on_delete=models.PROTECT, 
                                 related_name='treatments', verbose_name="Categoría")
     base_price = models.DecimalField("Precio Base", max_digits=10, decimal_places=2)
@@ -32,10 +34,11 @@ class Treatment(BaseModel):
     class Meta:
         verbose_name = "Tratamiento"
         verbose_name_plural = "Tratamientos"
-        ordering = ['category', 'nombre']
+        ordering = ['category', 'name']
+        db_table = 'tratamientos'
     
     def __str__(self):
-        return f"{self.nombre} ({self.category})"
+        return f"{self.name} ({self.category})"
 
 
 class TreatmentPerformed(BaseModel):
@@ -47,7 +50,7 @@ class TreatmentPerformed(BaseModel):
         ('cancelled', 'Cancelado'),
     ]
     
-    appointment = models.ForeignKey('appointments.Appointment', on_delete=models.CASCADE,
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE,
                                   related_name='treatments_performed', verbose_name="Cita")
     treatment = models.ForeignKey(Treatment, on_delete=models.PROTECT, 
                                 related_name='performances', verbose_name="Tratamiento")
@@ -62,11 +65,13 @@ class TreatmentPerformed(BaseModel):
     
     dentist = models.ForeignKey(User, on_delete=models.PROTECT, 
                                related_name='treatments_performed', verbose_name="Dentista")
-    appointment = models.ForeignKey('appointments.Appointment', on_delete=models.CASCADE,
+    appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE,
                                   related_name='treatments_performed', verbose_name="Cita")
     class Meta:
         verbose_name = "Tratamiento Realizado"
         verbose_name_plural = "Tratamientos Realizados"
+        db_table = 'performed_treatments'
+        ordering = ['-start_datetime']
     
     def __str__(self):
         return f"{self.treatment} - {self.appointment}"
