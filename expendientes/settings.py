@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'citas',
     'tratamientos',
     'registros_dentales',
+    'finanzas',
 ]
 
 MIDDLEWARE = [
