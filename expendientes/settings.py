@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'tratamientos',
     'registros_dentales',
     'finanzas',
+    'inventarios',
 ]
 
 MIDDLEWARE = [
