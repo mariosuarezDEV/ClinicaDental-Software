@@ -6,7 +6,6 @@ from citas.models import Appointment
 from django_prose_editor.fields import ProseEditorField
 from base.models import BaseModel
 
-
 class Tooth(BaseModel):
     """Catálogo de dientes según notación estándar"""
     TOOTH_TYPES = [

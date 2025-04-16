@@ -26,3 +26,10 @@ class AppointmentAdmin(ModelAdmin):
     def get_duration_minutes(self, obj):
         return obj.duration_minutes
     get_duration_minutes.short_description = "Duración (minutos)"
+
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)

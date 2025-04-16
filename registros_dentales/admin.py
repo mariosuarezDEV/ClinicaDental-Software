@@ -36,6 +36,14 @@ class ToothAdmin(ModelAdmin):
         })
     )
 
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
+
 
 class ToothStatusInline(TabularInline):
     """Visualización de estados de dientes como inline en odontogramas"""
@@ -70,6 +78,14 @@ class ToothSurfaceAdmin(ModelAdmin):
         })
     )
 
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
+
 
 @admin.register(Odontogram)
 class OdontogramAdmin(ModelAdmin):
@@ -88,6 +104,14 @@ class OdontogramAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(ToothStatus)
@@ -108,6 +132,13 @@ class ToothStatusAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(DentalCondition)
@@ -127,6 +158,13 @@ class DentalConditionAdmin(ModelAdmin):
             'fields': ('surface', 'description', 'dentist'),
         })
     )
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 
 @admin.register(ToothTreatment)
@@ -150,6 +188,13 @@ class ToothTreatmentAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
 
 
 class TeethInline(TabularInline):
@@ -181,3 +226,10 @@ class DentalDocumentAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by')
+        # Guardar creado por y actualizado por
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+        obj.updated_by = request.user
+        super().save_model(request, obj, form, change)
