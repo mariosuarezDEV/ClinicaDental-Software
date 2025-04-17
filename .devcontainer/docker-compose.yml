@@ -1,0 +1,44 @@
+services:
+  mysql-satel:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: edqnLMCSf31.
+      MYSQL_DATABASE: satel-db
+    networks:
+      - satel-net
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - db-satel:/var/lib/mysql
+  phpmyadmin-satel:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_USER: root
+      PMA_PASSWORD: edqnLMCSf31.
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - satel-net
+  django-satel:
+    build:
+      context: ../
+      dockerfile: Dockerfile
+    container_name: django
+    volumes:
+      - ../:/app
+    ports:
+      - 8000:8000
+    command: sleep infinity
+    networks:
+      - satel-net
+    restart: always
+volumes:
+  db-satel:
+networks:
+  satel-net:
+    driver: bridge
