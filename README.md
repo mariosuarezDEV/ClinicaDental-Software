@@ -1,6 +1,6 @@
-# Sistema de Gestión Dental SATEL
+# Sistema de Gestión Dental
 
-![Logo de SATEL](https://via.placeholder.com/150x50)
+![Logo](logo.png)
 
 ## Manual de Usuario
 
@@ -26,7 +26,7 @@
 
 ## Introducción
 
-El Sistema de Gestión Dental SATEL es una plataforma integral diseñada para optimizar la administración de clínicas dentales. Este sistema permite a los profesionales de la salud dental gestionar eficientemente pacientes, citas, tratamientos, registros clínicos y aspectos financieros desde una interfaz única y amigable.
+El Sistema de Gestión Dental es una plataforma integral diseñada para optimizar la administración de clínicas dentales. Este sistema permite a los profesionales de la salud dental gestionar eficientemente pacientes, citas, tratamientos, registros clínicos y aspectos financieros desde una interfaz única y amigable.
 
 ### Características Principales
 
@@ -226,10 +226,10 @@ R: En el módulo de Pagos, acceda a la sección "Reportes" y seleccione "Ingreso
 
 Si necesita ayuda adicional, puede contactar a nuestro equipo de soporte:
 
-- **Correo electrónico:** soporte@satel.com
+- **Correo electrónico:** 
 - **Teléfono:** (55) 1234-5678
 - **Horario de atención:** Lunes a viernes de 9:00 a 18:00 hrs.
 
 ---
 
-© 2025 SATEL - Sistema de Administración y Expedientes Dentales. Todos los derechos reservados.
+© 2025 Sistema de Administración y Expedientes Dentales. Todos los derechos reservados.
