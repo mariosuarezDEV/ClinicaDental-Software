@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5',
     "django_prose_editor",
+    'import_export',
     'formtools',
     # Allauth
     'allauth',
@@ -69,6 +70,7 @@ INSTALLED_APPS = [
     'registros_dentales',
     'finanzas',
     'inventarios',
+    'pagos'
 ]
 
 MIDDLEWARE = [
