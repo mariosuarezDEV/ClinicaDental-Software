@@ -47,7 +47,7 @@ Para comenzar a utilizar el sistema:
    - Contraseña
 3. Haga clic en "Iniciar sesión"
 
-![Pantalla de inicio de sesión](login-screen.png)
+![Pantalla de inicio de sesión](./img/login.png)
 
 ### Navegación Principal
 
@@ -81,7 +81,7 @@ Para crear un nuevo registro de paciente:
 
 El asistente muestra una barra de progreso para guiarlo a través del proceso completo.
 
-![Asistente de registro de pacientes](patient-wizard.png)
+![Asistente de registro de pacientes](./img/paciente-form.png)
 
 ### Historial Médico
 
@@ -200,7 +200,7 @@ Para documentar problemas específicos:
    - Descripción detallada
 4. Guarde la condición
 
-![Ejemplo de odontograma](odontogram.png)
+![Ejemplo de odontograma](./img/odontograma.png)
 
 ### Documentos Dentales
 
@@ -320,7 +320,7 @@ Para registrar un pago de cuota:
    - Calcula mora si hay atraso
    - Genera una transacción en el sistema de pagos
 
-![Ejemplo de plan de pagos](payment-plan.png)
+![Ejemplo de plan de pagos](./img/plan-pagos.png)
 
 ---
 
