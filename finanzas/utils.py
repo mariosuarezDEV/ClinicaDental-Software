@@ -1,5 +1,7 @@
 # utils.py
 from .models import Pago
+from django.utils import timezone
+from pagos.models import TransaccionesModel
 
 def generar_plan_pagos(financiamiento):
     """Genera el plan de pagos para un financiamiento"""
@@ -22,8 +24,8 @@ def generar_plan_pagos(financiamiento):
             year=fecha_actual.year + (1 if fecha_actual.month == 12 else 0)
         )
 
-def registrar_pago(pago, monto, fecha=None):
-    """Registra un pago realizado"""
+def registrar_pago(pago, monto, fecha=None, forma_pago=None):
+    """Registra un pago realizado y genera la transacción correspondiente"""
     from django.utils import timezone
     
     if not fecha:
@@ -31,6 +33,24 @@ def registrar_pago(pago, monto, fecha=None):
     
     pago.monto_pagado = monto
     pago.fecha_pago = fecha
+    pago.forma_pago = forma_pago
+    
+    # Crear transacción si se proporcionó forma de pago
+    if forma_pago:
+        # Crear la transacción
+        transaccion = TransaccionesModel.objects.create(
+            fecha=fecha,
+            monto=monto,
+            concepto=f"Pago cuota {pago.numero_cuota} - Financiamiento {pago.financiamiento.id}",
+            tipo_movimiento="E",  # Entrada de dinero
+            forma_pago=forma_pago,
+            referencia=f"FINPAGO-{pago.id}",
+            created_by=pago.created_by,
+            updated_by=pago.updated_by
+        )
+        # Asociar transacción con el pago
+        pago.transaccion = transaccion
+    
     pago.save()
     
     return {

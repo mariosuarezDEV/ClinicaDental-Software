@@ -4,7 +4,7 @@ from django.utils import timezone
 from paciente.models import PacienteModel
 from base.models import BaseModel
 from decimal import Decimal
-
+from pagos.models import FormasPagoModel, TransaccionesModel
 
 class Garantia(BaseModel):
     marca_auto = models.CharField(max_length=50)
@@ -103,6 +103,15 @@ class Pago(BaseModel):
     fecha_vencimiento = models.DateField()
     monto_pagado = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     fecha_pago = models.DateField(null=True, blank=True)
+    # New fields:
+    forma_pago = models.ForeignKey(FormasPagoModel, on_delete=models.PROTECT, 
+                                  null=True, blank=True, 
+                                  related_name='financiamiento_pagos', 
+                                  verbose_name="Forma de pago")
+    transaccion = models.OneToOneField(TransaccionesModel, on_delete=models.SET_NULL, 
+                                     null=True, blank=True, 
+                                     related_name='financiamiento_pago', 
+                                     verbose_name="Transacción")
     
     def __str__(self):
         return f"Pago {self.numero_cuota} de {self.financiamiento}"
