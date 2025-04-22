@@ -175,7 +175,7 @@ class TransaccionesAdmin(ModelAdmin):
             'fields': ('fecha', 'forma_pago', 'monto', 'tipo_movimiento', 'concepto')
         }),
         ('Auditoría', {
-            'fields': ('created_at', 'updated_at', 'created_by', 'updated_by', 'status', 'notas'),
+            'fields': ('created_at', 'updated_at', 'created_by', 'updated_by', 'status'),
             'classes': ('collapse',)
         })
     )
