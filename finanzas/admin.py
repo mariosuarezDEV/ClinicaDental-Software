@@ -23,7 +23,16 @@ class GarantiaAdmin(ModelAdmin):
 class PagoInline(TabularInline):
     model = Pago
     extra = 0
-    readonly_fields = ('numero_cuota', 'fecha_vencimiento', 'cuota_regular', 'mora')
+    readonly_fields = ('numero_cuota', 'fecha_vencimiento', 'cuota_regular', 'mora', 'created_at', 'updated_at', 'created_by', 'updated_by')
+    def save_model(self, request, obj, form, change):
+        if not change:
+            obj.created_by = request.user
+            obj.updated_by = request.user
+        else:
+            obj.updated_by = request.user
+        obj.updated_at = datetime.now()
+        obj.save()
+        super().save_model(request, obj, form, change)
 
 @admin.register(Financiamiento)
 class FinanciamientoAdmin(ModelAdmin):
