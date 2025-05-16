@@ -34,7 +34,12 @@ class Financiamiento(BaseModel):
     
     def __str__(self):
         return f"Financiamiento de {self.cliente} - ${self.monto_tratamiento}"
-    
+
+    @property
+    def monto_total_a_pagar(self):
+        """Monto total a pagar, incluyendo intereses"""
+        return self.saldo_financiar * (Decimal('1') + self.tasa_interes)
+
     @property
     def anticipo(self):
         """Calcula el anticipo (35%)"""

@@ -6,6 +6,7 @@ from .utils import generar_plan_pagos
 from django.utils import timezone
 from datetime import datetime
 from pagos.models import TransaccionesModel
+
 @admin.register(Garantia)
 class GarantiaAdmin(ModelAdmin):
     list_display = ('marca_auto', 'modelo_auto', 'año_auto', 'es_valida')
@@ -38,6 +39,7 @@ class PagoInline(TabularInline):
 @admin.register(Financiamiento)
 class FinanciamientoAdmin(ModelAdmin):
     list_display = ('cliente', 'monto_tratamiento', 'anticipo', 'saldo_financiar', 'plazo_años', 'tasa_interes')
+    list_editable = ('plazo_años',)
     search_fields = ('cliente__nombre', 'cliente__apellido')
     list_filter = ('plazo_años',)
     inlines = [PagoInline]
@@ -65,12 +67,21 @@ class PagoAdmin(ModelAdmin):
                    'cuota_regular', 'monto_pagado', 'forma_pago', 'esta_atrasado', 'mora')
     list_filter = ('financiamiento', 'fecha_vencimiento', 'forma_pago')
     search_fields = ('financiamiento__cliente__nombre',)
-    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by', 'transaccion')
+    readonly_fields = ('created_at', 'updated_at', 'created_by', 'updated_by', 'transaccion', 'cuota_regular', 'monto_total_a_pagar')
+
     autocomplete_fields = ['forma_pago']
     
     fieldsets = (
         ('Información del pago', {
-            'fields': ('financiamiento', 'numero_cuota', 'fecha_vencimiento', 'monto_pagado', 'fecha_pago')
+            'fields': (
+        'financiamiento',
+        'numero_cuota',
+        'fecha_vencimiento',
+        'cuota_regular',
+        'monto_total_a_pagar',  # nuevo
+        'monto_pagado',
+        'fecha_pago'
+    )
         }),
         ('Método de pago', {
             'fields': ('forma_pago', 'transaccion')
@@ -80,6 +91,13 @@ class PagoAdmin(ModelAdmin):
             'classes': ('collapse',)
         })
     )
+
+    def monto_total_a_pagar(self, obj):
+        if obj.financiamiento:
+            return round(obj.financiamiento.monto_total_a_pagar, 2)
+        return "-"
+
+    monto_total_a_pagar.short_description = "Monto total a pagar"
 
     def save_model(self, request, obj, form, change):
         if not change:
