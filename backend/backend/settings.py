@@ -41,7 +41,9 @@ INSTALLED_APPS = [
     'base.apps.BaseConfig',
     'cita.apps.CitaConfig',
     'tratamiento.apps.TratamientoConfig',
-    'doctor.apps.DoctorConfig'
+    'doctor.apps.DoctorConfig',
+    'pago.apps.PagoConfig',
+    'factura.apps.FacturaConfig'
 ]
 
 MIDDLEWARE = [
