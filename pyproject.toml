@@ -9,5 +9,6 @@ dependencies = [
     "django>=5.2.5",
     "django-bootstrap5>=25.2",
     "groq>=0.31.0",
+    "pillow>=11.3.0",
     "requests>=2.32.5",
 ]

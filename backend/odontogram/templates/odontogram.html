@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="fs-1 fw-bold">
+    Odontograma
+</h1>
+<a href="{% url 'create_teeth' %}" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Agregar diente</a>
+<!-- Upper Teeth -->
+<div class="row row-cols-16 text-center align-middle my-3 px-5">
+    {% for tooth in teeth|slice:":16" %}
+        <div class="col">
+            <div>
+                <img src="{{ tooth.image.url }}" alt="{{ tooth.name }}" width="60px" class="img-fluid">
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Lower Teeth -->
+<div class="row row-cols-16 text-center align-middle my-3 flex-row-reverse px-5">
+    {% for tooth in teeth|slice:"16:" %}
+        <div class="col">
+            <div>
+                <img src="{{ tooth.image.url }}" alt="{{ tooth.name }}" width="60px" class="img-fluid">
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{% endblock content %}
+
