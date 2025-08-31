@@ -1,6 +1,3 @@
-def main():
-    print("Hello from clinicadental-software!")
+import requests as rq
 
-
-if __name__ == "__main__":
-    main()
+rq.get("http://google.com/")
