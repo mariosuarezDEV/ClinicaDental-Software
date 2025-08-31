@@ -8,6 +8,7 @@ from .views import (
     CreateSpecialtyView,
     UpdateSpecialtyView,
     DeleteSpecialtyView,
+    TreatmentWizardView,
 )
 
 urlpatterns = [
@@ -32,5 +33,10 @@ urlpatterns = [
         "especialidades/eliminar/<int:pk>/",
         DeleteSpecialtyView.as_view(),
         name="eliminar_especialidad",
+    ),
+    path(
+        "crear-tratamiento/",
+        TreatmentWizardView.as_view(),
+        name="crear_tratamiento_wizard",
     ),
 ]

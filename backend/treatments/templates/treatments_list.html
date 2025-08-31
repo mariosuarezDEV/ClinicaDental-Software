@@ -22,9 +22,9 @@
           <td>{{ tratamiento.id }}</td>
           <td>{{ tratamiento.name }}</td>
           <td>{{ tratamiento.description }}</td>
-          <td>{{ tratamiento.price }}</td>
+          <td>${{ tratamiento.price }}</td>
           <td>{{ tratamiento.speciality }}</td>
-          <td>{{ tratamiento.specialist }}</td>
+          <td>{{ tratamiento.specialist.get_full_name|default:tratamiento.specialist.username }}</td>
           <td>
             {% url 'editar_tratamiento' tratamiento.id as url_editar %}
             {% url 'eliminar_tratamiento' tratamiento.id as url_eliminar %}

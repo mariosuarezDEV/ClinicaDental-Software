@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <h1 class="fs-1 fw-bold col-12 mb-3">Inicio</h1>
+    <div class="col-md-6 col-12">
+        <div class="card text-bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Consulta</h5>
+                <p class="card-text">Añadir nueva consulta.</p>
+                <a href="{% url 'crear_tratamiento_wizard' %}" class="btn btn-light"><i class="fa-solid fa-plus"></i> Capturar datos</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

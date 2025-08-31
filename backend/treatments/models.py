@@ -55,7 +55,7 @@ class AppliedTreatmentsModel(AuditModel):
     )
     patient = models.ForeignKey(User, on_delete=models.PROTECT, verbose_name="Paciente")
     teeth = models.ManyToManyField(TeethModel, verbose_name="Dientes", blank=True)
-    apply_date = models.DateField(verbose_name="Fecha de aplicación", auto_now_add=True)
+    apply_date = models.DateField(verbose_name="Fecha de aplicación")
     final_price = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Precio final"
     )

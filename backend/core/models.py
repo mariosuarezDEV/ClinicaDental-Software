@@ -29,6 +29,9 @@ class UserModel(AbstractUser):
         max_length=255, null=True, blank=True, verbose_name="Dirección"
     )
 
+    def __str__(self):
+        return self.get_full_name() or self.username
+
 
 class AuditModel(models.Model):
     created_by = models.ForeignKey(

@@ -13,7 +13,15 @@ from django.views.generic import (
 from .models import SpecialtyModel, TreatmentsModel, AppliedTreatmentsModel
 
 # Formularios
-from .forms import CreateTreatmentForm, CreateSpecialtyForm
+from .forms import (
+    CreateTreatmentForm,
+    CreateSpecialtyForm,
+    TreatmentFormStep1,
+    TeethFormStep3,
+    DetailsFormStep4,
+)
+from patients.forms import CreatePacienteForm
+from formtools.wizard.views import SessionWizardView
 
 # Mixins
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -136,3 +144,41 @@ class DeleteSpecialtyView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVie
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Especialidad eliminada exitosamente.")
         return super().delete(request, *args, **kwargs)
+
+
+# Create a Treatment Wizard View
+class TreatmentWizardView(
+    LoginRequiredMixin, PermissionRequiredMixin, SessionWizardView
+):
+    permission_required = "treatments.add_appliedtreatmentsmodel"
+    form_list = [
+        ("step1", TreatmentFormStep1),
+        ("step3", TeethFormStep3),
+        ("step4", DetailsFormStep4),
+    ]
+    template_name = "treatment_wizard.html"
+
+    def done(self, form_list, **kwargs):
+        data = {}
+        for form in form_list:
+            data.update(form.cleaned_data)
+        try:
+            applied_treatment = AppliedTreatmentsModel.objects.create(
+                treatment=data["treatment"],
+                patient=data["patient"],
+                apply_date=data["apply_date"],
+                final_price=data["final_price"],
+                status=data["status"],
+                notes=data["notes"],
+                created_by=self.request.user,
+                updated_by=self.request.user,
+            )
+            if "teeth" in data:
+                applied_treatment.teeth.set(data["teeth"])
+            applied_treatment.save()
+            messages.success(self.request, "Tratamiento aplicado exitosamente.")
+        except Exception as e:
+            messages.error(self.request, "Error al aplicar tratamiento.")
+            print(e)
+            # Optionally log the error
+        return redirect("lista_tratamientos")
