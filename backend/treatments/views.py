@@ -13,7 +13,7 @@ from django.views.generic import (
 from .models import SpecialtyModel, TreatmentsModel, AppliedTreatmentsModel
 
 # Formularios
-from .forms import CreateTreatmentForm
+from .forms import CreateTreatmentForm, CreateSpecialtyForm
 
 # Mixins
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -85,4 +85,54 @@ class DeleteTreatmentView(LoginRequiredMixin, PermissionRequiredMixin, DeleteVie
 
     def delete(self, request, *args, **kwargs):
         messages.success(self.request, "Tratamiento eliminado exitosamente.")
+        return super().delete(request, *args, **kwargs)
+
+
+class ListSpecialtiesView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    model = SpecialtyModel
+    template_name = "specialties_list.html"
+    context_object_name = "especialidades"
+    permission_required = "treatments.view_specialtymodel"
+    paginate_by = 10
+
+    def get_queryset(self):
+        return list(SpecialtyModel.objects.all())
+
+
+class CreateSpecialtyView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    model = SpecialtyModel
+    template_name = "specialty_form.html"
+    form_class = CreateSpecialtyForm
+    success_url = reverse_lazy("lista_especialidades")
+    permission_required = "treatments.add_specialtymodel"
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        messages.success(self.request, "Especialidad creada exitosamente.")
+        return super().form_valid(form)
+
+
+class UpdateSpecialtyView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
+    model = SpecialtyModel
+    template_name = "specialty_form.html"
+    form_class = CreateSpecialtyForm
+    success_url = reverse_lazy("lista_especialidades")
+    permission_required = "treatments.change_specialtymodel"
+    context_object_name = "especialidad"
+
+    def form_valid(self, form):
+        form.instance.updated_by = self.request.user
+        messages.success(self.request, "Especialidad actualizada exitosamente.")
+        return super().form_valid(form)
+
+
+class DeleteSpecialtyView(LoginRequiredMixin, PermissionRequiredMixin, DeleteView):
+    model = SpecialtyModel
+    template_name = "specialty_confirm_delete.html"
+    success_url = reverse_lazy("lista_especialidades")
+    permission_required = "treatments.delete_specialtymodel"
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, "Especialidad eliminada exitosamente.")
         return super().delete(request, *args, **kwargs)
