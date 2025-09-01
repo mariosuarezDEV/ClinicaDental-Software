@@ -179,6 +179,32 @@ El sistema utiliza la **API de Groq** para generar cálculos financieros preciso
 - **AP**: Aplicado
 - **CA**: Cancelado
 
+## 📸 Capturas del Sistema
+
+### Dashboard Principal
+![Dashboard Principal](images/dashboard.png)
+*Vista principal del sistema con accesos rápidos a todas las funcionalidades*
+
+### Gestión de Pacientes
+![Listado de Pacientes](images/pacientes.png)
+*Lista completa de pacientes con opciones de búsqueda y filtrado*
+
+### Odontograma Digital
+![Odontograma](images/odontograma.png)
+*Visualización interactiva del odontograma con carga de imágenes*
+
+### Sistema de Financiamiento
+![Calculadora Financiera](images/financiamientos.png)
+*Calculadora inteligente de financiamiento con IA*
+
+### Administración
+![Panel de Administración](images/admin.png)
+*Panel administrativo para gestión de usuarios y configuraciones*
+
+### Formularios estandar
+![Formulario de Tratamiento](images/formularios.png)
+*Formularios intuitivos y fáciles de usar*
+
 ## 📞 Soporte
 
 Para reportar problemas o solicitar nuevas funcionalidades, crear un issue en el repositorio del proyecto.
@@ -188,8 +214,5 @@ Para reportar problemas o solicitar nuevas funcionalidades, crear un issue en el
 Este proyecto está bajo una licencia específica. Consultar el archivo LICENSE para más detalles.
 
 ---
-
-## ScreenShots del Sistema
-
 
 **Desarrollado para la gestión eficiente de clínicas dentales 🦷✨**
