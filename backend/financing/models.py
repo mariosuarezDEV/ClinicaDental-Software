@@ -37,9 +37,10 @@ class FinancingModel(AuditModel):
     monthly_payment = models.DecimalField(
         max_digits=10, decimal_places=2, verbose_name="Pago Mensual"
     )
+    date_payment = models.DateField(verbose_name="Fecha de Pago", null=True, blank=True)
 
     def __str__(self):
-        return f"Financing for {self.patient} - {self.treatment}"
+        return f"Financing for {self.patient} - {self.treatment} (ID: {self.id})"
 
 
 class PaymentsModel(AuditModel):

@@ -41,7 +41,11 @@ class FinancingForm(forms.ModelForm):
             "down_payment",
             "total_financed",
             "monthly_payment",
+            "date_payment",
         ]
+        widgets = {
+            "date_payment": forms.DateInput(attrs={"type": "date"}),
+        }
 
 
 class PaymentsForm(forms.ModelForm):

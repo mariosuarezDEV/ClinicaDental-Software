@@ -4,6 +4,7 @@ from .views import (
     FinancingResultView,
     PaymentsCreateView,
     ListFinancingView,
+    HistoryPaymentsView,
 )
 
 urlpatterns = [
@@ -11,4 +12,9 @@ urlpatterns = [
     path("result/", FinancingResultView.as_view(), name="financing_result"),
     path("list/", ListFinancingView.as_view(), name="list_financing"),
     path("payments/create/", PaymentsCreateView.as_view(), name="payments_create"),
+    path(
+        "payments/history/<int:pk>/",
+        HistoryPaymentsView.as_view(),
+        name="payments_history",
+    ),
 ]

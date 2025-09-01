@@ -178,7 +178,7 @@ class PaymentsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView
 
 class ListFinancingView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
     permission_required = "financing.view_payments"
-    template_name = "payments_list.html"
+    template_name = "financings_list.html"
     model = FinancingModel
     context_object_name = "financings"
 
@@ -186,5 +186,21 @@ class ListFinancingView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
         return list(
             FinancingModel.objects.all().select_related(
                 "patient", "treatment", "interest_rate"
+            )
+        )
+
+
+class HistoryPaymentsView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = "financing.view_payments"
+    template_name = "payments_history.html"
+    model = PaymentsModel
+    context_object_name = "payments"
+
+    def get_queryset(self):
+        # Obtener el pk
+        pk = self.kwargs.get("pk")
+        return list(
+            PaymentsModel.objects.filter(financing__id=pk).select_related(
+                "financing__patient", "financing__treatment"
             )
         )
