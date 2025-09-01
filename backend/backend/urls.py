@@ -26,6 +26,7 @@ urlpatterns = [
     path("pacientes/", include("patients.urls")),
     path("tratamientos/", include("treatments.urls")),
     path("odontograma/", include("odontogram.urls")),
+    path("financiamiento/", include("financing.urls")),
 ]
 
 if settings.DEBUG:
