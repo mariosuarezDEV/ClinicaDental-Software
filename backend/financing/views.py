@@ -10,9 +10,16 @@ from django.views.generic import (
 )
 
 # Modelos
+from .models import PaymentsModel, FinancingModel
 
 # Formularios
-from .forms import AppliedTreatmentsFormStep1, InteresRateForm, HitchForm
+from .forms import (
+    AppliedTreatmentsFormStep1,
+    InteresRateForm,
+    HitchForm,
+    FinancingForm,
+    PaymentsForm,
+)
 from formtools.wizard.views import SessionWizardView
 
 # Mixins
@@ -133,12 +140,14 @@ class FormCalculatorView(LoginRequiredMixin, SessionWizardView):
         self.request.session["financing_markdown"] = chat_completion.choices[
             0
         ].message.content
-        print(f"Instrucción enviada: {prompt}")
         return redirect("financing_result")
 
 
-class FinancingResultView(LoginRequiredMixin, TemplateView):
+class FinancingResultView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = "financing.view_financing"
     template_name = "financing_result.html"
+    form_class = FinancingForm
+    success_url = reverse_lazy("dashboard")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -146,3 +155,36 @@ class FinancingResultView(LoginRequiredMixin, TemplateView):
         # Markdown a HTML
         context["financing_html"] = markdown2.markdown(raw_md, extras=["tables"])
         return context
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        messages.success(self.request, "Financiamiento creado exitosamente")
+        return super().form_valid(form)
+
+
+class PaymentsCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
+    permission_required = "financing.add_payments"
+    template_name = "payments_form.html"
+    form_class = PaymentsForm
+    success_url = reverse_lazy("dashboard")
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        form.instance.updated_by = self.request.user
+        messages.success(self.request, "Pago registrado exitosamente")
+        return super().form_valid(form)
+
+
+class ListFinancingView(LoginRequiredMixin, PermissionRequiredMixin, ListView):
+    permission_required = "financing.view_payments"
+    template_name = "payments_list.html"
+    model = FinancingModel
+    context_object_name = "financings"
+
+    def get_queryset(self):
+        return list(
+            FinancingModel.objects.all().select_related(
+                "patient", "treatment", "interest_rate"
+            )
+        )

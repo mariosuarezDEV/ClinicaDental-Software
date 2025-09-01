@@ -179,14 +179,6 @@ El sistema utiliza la **API de Groq** para generar cálculos financieros preciso
 - **AP**: Aplicado
 - **CA**: Cancelado
 
-## 🚦 Próximos Pasos
-
-1. Implementar sistema de citas
-2. Módulo de inventario dental
-3. Reportes y estadísticas avanzadas
-4. Integración con sistemas de pago
-5. API REST para aplicaciones móviles
-
 ## 📞 Soporte
 
 Para reportar problemas o solicitar nuevas funcionalidades, crear un issue en el repositorio del proyecto.

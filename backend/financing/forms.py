@@ -1,6 +1,6 @@
 from django import forms
 from treatments.models import AppliedTreatmentsModel
-from .models import InteresRateModel
+from .models import InteresRateModel, FinancingModel, PaymentsModel
 
 
 # Form steps
@@ -29,3 +29,25 @@ class HitchForm(forms.Form):
         widget=forms.NumberInput(attrs={"class": "form-control"}),
         label="Enganche",
     )
+
+
+class FinancingForm(forms.ModelForm):
+    class Meta:
+        model = FinancingModel
+        fields = [
+            "patient",
+            "treatment",
+            "interest_rate",
+            "down_payment",
+            "total_financed",
+            "monthly_payment",
+        ]
+
+
+class PaymentsForm(forms.ModelForm):
+    class Meta:
+        model = PaymentsModel
+        fields = ["financing", "amount", "payment_date"]
+        widgets = {
+            "payment_date": forms.DateInput(attrs={"type": "date"}),
+        }

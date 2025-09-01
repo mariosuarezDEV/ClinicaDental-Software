@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 class="fs-1 fw-bold">Lista de Pagos</h1>
+<table class="table table-striped table-hover align-middle caption-top">
+    <caption>
+        <a href="{% url 'payments_create' %}" class="btn btn-primary">Agregar pago</a>
+    </caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Paciente</th>
+            <th>Tratamiento</th>
+            <th>Total financiado</th>
+            <th>Pago mensual</th>
+            <th>Tasa de interes</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for payment in financings %}
+        <tr>
+            <td>{{ payment.id }}</td>
+            <td>{{ payment.patient }}</td>
+            <td>{{ payment.treatment }}</td>
+            <td>{{ payment.total_financed }}</td>
+            <td>{{ payment.monthly_payment }}</td>
+            <td>{{ payment.interest_rate.name }} - {{ payment.interest_rate.rate }}%</td>
+            <td>
+                
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center">No hay pagos registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock content %}
