@@ -189,4 +189,7 @@ Este proyecto está bajo una licencia específica. Consultar el archivo LICENSE 
 
 ---
 
+## ScreenShots del Sistema
+
+
 **Desarrollado para la gestión eficiente de clínicas dentales 🦷✨**

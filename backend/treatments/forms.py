@@ -6,6 +6,10 @@ User = get_user_model()
 
 
 class CreateTreatmentForm(forms.ModelForm):
+    specialist = forms.ModelChoiceField(
+        queryset=User.objects.filter(type_user="doctor")
+    )
+
     class Meta:
         model = TreatmentsModel
         fields = ["name", "description", "price", "speciality", "specialist"]
